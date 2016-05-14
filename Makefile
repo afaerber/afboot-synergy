@@ -29,3 +29,9 @@ dk-s7g2: dk-s7g2.elf Makefile
 
 clean:
 	@rm -f *.o *.elf *.bin *.lst
+
+gdb-dk-s7g2-jlink:
+	JLinkGDBServer -device R7FS7G2 -if SWD
+
+flash-dk-s7g2-jlink: dk-s7g2
+	$(GDB) dk-s7g2.elf -ex "target remote :2331" -ex "monitor reset" -ex "load" -ex "monitor reset" -ex "monitor go"
